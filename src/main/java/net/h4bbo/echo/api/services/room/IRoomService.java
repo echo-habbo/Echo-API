@@ -8,4 +8,6 @@ public interface IRoomService {
     List<RoomData> getRoomsByCategory(int categoryId);
 
     List<RoomData> getRoomsByUserId(int userId);
+
+    List<RoomData> search(String queryString);
 }
