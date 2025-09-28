@@ -10,7 +10,7 @@ import org.oldskooler.simplelogger4j.SimpleLog;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public abstract class MessageEvent {
+public abstract class MessageEvent<T extends JavaPlugin> {
     private IEventManager eventManager;
     private IPluginManager pluginManager;
     private JavaPlugin plugin;
@@ -34,8 +34,9 @@ public abstract class MessageEvent {
 
     public abstract void handle(IPlayer player, IClientCodec msg);
 
-    public JavaPlugin getPlugin() {
-        return plugin;
+    @SuppressWarnings("unchecked")
+    public T getPlugin() {
+        return (T) plugin;
     }
 
     public SimpleLog getLogger() {
