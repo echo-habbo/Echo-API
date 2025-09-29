@@ -2,7 +2,7 @@ package net.h4bbo.echo.api.event.types.client;
 
 import io.netty.buffer.ByteBuf;
 import net.h4bbo.echo.api.event.types.ICancellableEvent;
-import net.h4bbo.echo.api.network.session.IConnectionSession;
+import net.h4bbo.echo.api.network.connection.IConnectionSession;
 
 public class ConnectionOutgoingDataEvent extends ICancellableEvent {
     private IConnectionSession connection;

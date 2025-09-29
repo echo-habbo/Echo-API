@@ -3,9 +3,8 @@ package net.h4bbo.echo.api.game.player;
 
 import net.h4bbo.echo.api.commands.CommandSender;
 import net.h4bbo.echo.api.game.entity.IEntity;
-import net.h4bbo.echo.api.network.codecs.IPacketCodec;
-import net.h4bbo.echo.api.network.session.IConnectionSend;
-import net.h4bbo.echo.api.network.session.IConnectionSession;
+import net.h4bbo.echo.api.network.connection.IConnectionSend;
+import net.h4bbo.echo.api.network.connection.IConnectionSession;
 
 import java.util.concurrent.CompletableFuture;
 

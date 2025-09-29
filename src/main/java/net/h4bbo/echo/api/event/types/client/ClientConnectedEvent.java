@@ -1,7 +1,7 @@
 package net.h4bbo.echo.api.event.types.client;
 
 import net.h4bbo.echo.api.event.types.ICancellableEvent;
-import net.h4bbo.echo.api.network.session.IConnectionSession;
+import net.h4bbo.echo.api.network.connection.IConnectionSession;
 
 public class ClientConnectedEvent extends ICancellableEvent {
     private IConnectionSession session;

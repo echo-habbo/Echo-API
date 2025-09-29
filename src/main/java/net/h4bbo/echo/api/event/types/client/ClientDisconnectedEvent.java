@@ -1,7 +1,7 @@
 package net.h4bbo.echo.api.event.types.client;
 
 import net.h4bbo.echo.api.event.types.IEvent;
-import net.h4bbo.echo.api.network.session.IConnectionSession;
+import net.h4bbo.echo.api.network.connection.IConnectionSession;
 
 public class ClientDisconnectedEvent extends IEvent {
     private final IConnectionSession session;

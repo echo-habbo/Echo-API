@@ -2,9 +2,10 @@ package net.h4bbo.echo.api.messages;
 
 import net.h4bbo.echo.api.event.IEventManager;
 import net.h4bbo.echo.api.network.codecs.IClientCodec;
-import net.h4bbo.echo.api.network.session.IConnectionSession;
+import net.h4bbo.echo.api.network.connection.IConnectionSession;
 import net.h4bbo.echo.api.plugin.JavaPlugin;
 import net.h4bbo.echo.api.plugin.IPluginManager;
+import org.oldskooler.inject4j.ServiceProvider;
 import org.oldskooler.simplelogger4j.SimpleLog;
 
 import java.lang.reflect.Constructor;
@@ -17,12 +18,14 @@ public class MessageHandler implements IMessageHandler {
     private final SimpleLog log;
     private final IEventManager eventManager;
     private final IPluginManager pluginManager;
+    private final ServiceProvider serviceProvider;
 
-    public MessageHandler(IConnectionSession connectionSession, IEventManager eventManager, IPluginManager pluginManager) {
+    public MessageHandler(IConnectionSession connectionSession, IEventManager eventManager, IPluginManager pluginManager, ServiceProvider serviceProvider) {
         this.log = SimpleLog.of(MessageHandler.class);
         this.connectionSession = connectionSession;
         this.eventManager = eventManager;
         this.pluginManager = pluginManager;
+        this.serviceProvider = serviceProvider;
     }
 
     public <THandler extends MessageEvent<? extends JavaPlugin>> void register(JavaPlugin plugin, int headerId, THandler handler) {
@@ -44,8 +47,9 @@ public class MessageHandler implements IMessageHandler {
     // Registers a handler by type. The handler must implement IMessageEvent and expose a public HeaderId property.
     public <THandler extends MessageEvent<? extends JavaPlugin>> void register(JavaPlugin plugin, Class<THandler> handlerClass) {
         try {
-            Constructor<THandler> ctor = handlerClass.getDeclaredConstructor();
-            THandler instance = ctor.newInstance(); // you must have these!
+            // Constructor<THandler> ctor = handlerClass.getDeclaredConstructor();
+            // THandler instance = ctor.newInstance(); // you must have these!
+            THandler instance = this.serviceProvider.createInstance(handlerClass);
             int headerId = instance.getHeaderId();
             register(plugin, headerId, instance);
         } catch (Exception e) {
@@ -57,7 +61,9 @@ public class MessageHandler implements IMessageHandler {
     public <THandler extends MessageEvent<? extends JavaPlugin>> int deregister(JavaPlugin plugin, Class<THandler> handlerClass) {
         int headerId;
         try {
-            THandler instance = handlerClass.getDeclaredConstructor().newInstance();
+            // Constructor<THandler> ctor = handlerClass.getDeclaredConstructor();
+            // THandler instance = ctor.newInstance(); // you must have these!
+            THandler instance = this.serviceProvider.createInstance(handlerClass);
             headerId = instance.getHeaderId();
         } catch (Exception e) {
             log.error("Failed to deregister handler", e);

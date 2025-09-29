@@ -1,4 +1,4 @@
-package net.h4bbo.echo.api.network.session;
+package net.h4bbo.echo.api.network.connection;
 
 import net.h4bbo.echo.api.network.codecs.IPacketCodec;
 

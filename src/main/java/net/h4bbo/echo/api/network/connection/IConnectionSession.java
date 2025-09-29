@@ -1,4 +1,5 @@
-package net.h4bbo.echo.api.network.session;
+package net.h4bbo.echo.api.network.connection;
+
 
 import io.netty.channel.Channel;
 import net.h4bbo.echo.api.game.player.IPlayer;

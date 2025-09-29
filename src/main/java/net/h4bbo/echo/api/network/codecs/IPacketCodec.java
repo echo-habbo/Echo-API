@@ -1,6 +1,6 @@
 package net.h4bbo.echo.api.network.codecs;
 
-import net.h4bbo.echo.api.network.session.IConnectionSend;
+import net.h4bbo.echo.api.network.connection.IConnectionSend;
 
 public interface IPacketCodec {
     int getHeaderId();

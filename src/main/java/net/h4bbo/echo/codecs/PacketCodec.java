@@ -3,7 +3,7 @@ package net.h4bbo.echo.codecs;
 import net.h4bbo.echo.common.util.specialised.WireEncoding;
 import net.h4bbo.echo.api.network.codecs.DataCodec;
 import net.h4bbo.echo.api.network.codecs.IPacketCodec;
-import net.h4bbo.echo.api.network.session.IConnectionSend;
+import net.h4bbo.echo.api.network.connection.IConnectionSend;
 import net.h4bbo.echo.common.util.specialised.Base64Encoding;
 
 import java.io.ByteArrayOutputStream;
