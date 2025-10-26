@@ -11,8 +11,9 @@ public interface IClientCodec extends AutoCloseable {
     byte[] getReadableBytes();
     String getContent();
 
-    <T> T pop(DataCodec codec, Class<T> type);
-    Object get(DataCodec codec);
+    // <T> T pop(DataCodec codec, Class<T> type);
+    <T> T get(DataCodec codec);
+    byte[] readBytes(int amount);
 
     @Override
     void close(); // implementors can throw Exception if needed

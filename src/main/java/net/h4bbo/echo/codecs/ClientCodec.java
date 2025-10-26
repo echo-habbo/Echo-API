@@ -42,25 +42,33 @@ public class ClientCodec implements IClientCodec, AutoCloseable {
     }
 
     @Override
-    public Object get(DataCodec codec) {
+    public <T> T get(DataCodec codec) {
+        Object value;
         switch (codec) {
-            case DataCodec.VL64_INT:
-                return getInt();
-            case DataCodec.BASE64_INT:
-                return getBase64Int();
-            case DataCodec.STRING:
-                return getString();
-            case DataCodec.BOOL:
-                return getBool();
-            case DataCodec.BYTES:
-                return getReadableBytes();
+            case VL64_INT:
+                value = getInt();
+                break;
+            case BASE64_INT:
+                value = getBase64Int();
+                break;
+            case STRING:
+                value = getString();
+                break;
+            case BOOL:
+                value = getBool();
+                break;
+            case BYTES:
+                value = getReadableBytes();
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported codec: " + codec);
         }
+
+        return (T) codec.getType().cast(value);
     }
 
-    @Override
-    public <T> T pop(DataCodec codec, Class<T> type) {
+    // @Override
+    private <T> T pop(DataCodec codec, Class<T> type) {
         Object value = get(codec);
         if (type == String.class) {
             return type.cast(String.valueOf(value));
@@ -106,7 +114,7 @@ public class ClientCodec implements IClientCodec, AutoCloseable {
             byte[] bzData = this.getReadableBytes();
             int decoded = WireEncoding.decodeInt32(bzData);
             int decodedLength = bzData[0] >> 3 & 7;
-            readBytesInternal(decodedLength);
+            readBytes(decodedLength);
             return decoded;
         } catch (Exception e) {
             return 0;
@@ -117,7 +125,7 @@ public class ClientCodec implements IClientCodec, AutoCloseable {
         try {
             if (getReadableBytes().length < 2)
                 return 0;
-            byte[] data = readBytesInternal(2);
+            byte[] data = readBytes(2);
             String base64String = new String(data);
             return Base64Encoding.decodeInt32(base64String.getBytes());
         } catch (Exception e) {
@@ -129,10 +137,10 @@ public class ClientCodec implements IClientCodec, AutoCloseable {
         try {
             if (getReadableBytes().length < 2)
                 return "";
-            int totalBytes = Base64Encoding.decodeInt32(readBytesInternal(2));
+            int totalBytes = Base64Encoding.decodeInt32(readBytes(2));
             if (getReadableBytes().length < totalBytes)
                 return "";
-            byte[] data = readBytesInternal(totalBytes);
+            byte[] data = readBytes(totalBytes);
             String value = new String(data, ProtocolCodec.getEncoding());
             return value;
         } catch (Exception e) {
@@ -148,17 +156,7 @@ public class ClientCodec implements IClientCodec, AutoCloseable {
         }
     }
 
-    private byte[] getBytes(int len) {
-        try {
-            byte[] payload = new byte[len];
-            bufferReader.readBytes(payload);
-            return payload;
-        } catch (Exception e) {
-            return new byte[0];
-        }
-    }
-
-    private byte[] readBytesInternal(int len) {
+    public byte[] readBytes(int len) {
         try {
             byte[] payload = new byte[len];
             bufferReader.readBytes(payload);

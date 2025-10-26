@@ -1,5 +1,6 @@
 package net.h4bbo.echo.api.plugin;
 
+import net.h4bbo.echo.api.IAdvancedScheduler;
 import net.h4bbo.echo.api.event.IEventManager;
 import org.oldskooler.inject4j.ServiceCollection;
 import org.oldskooler.inject4j.ServiceProvider;
@@ -13,12 +14,14 @@ public abstract class JavaPlugin {
     private IPluginManager pluginManager;
     private SimpleLog logger;
     private ServiceProvider serviceProvider;
+    private IAdvancedScheduler advancedScheduler;
 
-    public void inject(IEventManager eventManager, IPluginManager pluginManager, ServiceProvider serviceProvider) {
+    public void inject(IEventManager eventManager, IPluginManager pluginManager, IAdvancedScheduler advancedScheduler, ServiceProvider serviceProvider) {
         if (!Objects.isNull(this.eventManager) || !Objects.isNull(this.pluginManager)) throw new RuntimeException("plugin classes have already injected");
         this.eventManager = eventManager;
         this.pluginManager = pluginManager;
         this.serviceProvider = serviceProvider;
+        this.advancedScheduler = advancedScheduler;
         this.logger = SimpleLog.of(this.getClass());
     }
 
@@ -66,5 +69,9 @@ public abstract class JavaPlugin {
 
     public ServiceProvider getServices() {
         return serviceProvider;
+    }
+
+    public IAdvancedScheduler getScheduler() {
+        return advancedScheduler;
     }
 }
