@@ -11,14 +11,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Defines the contract for a player within the game server.
  */
-public interface IPlayer extends IConnectionSend, IEntity, CommandSender {
+public interface IPlayer extends IEntity, CommandSender {
     boolean isAuthenticated();
     void setAuthenticated(boolean flag);
-
     IConnectionSession getConnection();
-
-    /**
-     * Disconnects the player from the server.
-     */
-    CompletableFuture<Void> disconnect();
+    void disconnect();
 }
