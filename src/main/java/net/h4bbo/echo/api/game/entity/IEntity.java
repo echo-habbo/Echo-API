@@ -1,6 +1,7 @@
 package net.h4bbo.echo.api.game.entity;
 
 import io.netty.util.AttributeMap;
+import net.h4bbo.echo.api.game.room.entities.RoomEntity;
 import net.h4bbo.echo.api.network.connection.IConnectionSend;
 
 /**
@@ -13,4 +14,5 @@ public interface IEntity extends AttributeMap, IConnectionSend {
      * @return the type
      */
     public abstract EntityType getType();
+    RoomEntity getRoomEntity();
 }
