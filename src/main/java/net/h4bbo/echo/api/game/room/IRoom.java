@@ -9,6 +9,7 @@ import net.h4bbo.echo.api.game.entity.IEntity;
 import net.h4bbo.echo.api.game.room.managers.IRoomEntityManager;
 import net.h4bbo.echo.api.network.connection.IConnectionSend;
 import net.h4bbo.echo.api.network.connection.IConnectionSession;
+import net.h4bbo.echo.api.plugin.JavaPlugin;
 import net.h4bbo.echo.storage.models.room.RoomData;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,6 +28,8 @@ public abstract class IRoom implements AttributeMap {
                 .attr(RoomData.DATA_KEY)
                 .get();
     }
+
+    public abstract JavaPlugin getPlugin();
 
     @Override
     public <T> Attribute<T> attr(AttributeKey<T> attributeKey) {

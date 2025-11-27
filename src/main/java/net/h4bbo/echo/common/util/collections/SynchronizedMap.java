@@ -2,7 +2,10 @@ package net.h4bbo.echo.common.util.collections;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Predicate; /**
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+/**
  * Thread-safe wrapper for Map/Dictionary operations
  */
 public class SynchronizedMap<K, V> {
@@ -140,6 +143,15 @@ public class SynchronizedMap<K, V> {
     public Collection<V> values() {
         synchronized (lock) {
             return new ArrayList<>(map.values());
+        }
+    }
+
+    /**
+     * Returns a sequential {@link Stream} of the current values in this map.
+     */
+    public Stream<V> stream() {
+        synchronized (lock) {
+            return new ArrayList<>(map.values()).stream();
         }
     }
 
