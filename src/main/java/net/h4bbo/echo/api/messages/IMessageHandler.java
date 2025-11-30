@@ -11,4 +11,6 @@ public interface IMessageHandler {
     <THandler extends MessageEvent<? extends JavaPlugin>> int deregister(JavaPlugin plugin, Class<THandler> handlerClass);
 
     void handleMessage(IClientCodec packet);
+
+    <THandler extends MessageEvent<? extends JavaPlugin>> boolean isRegistered(Class<THandler> leaveRoomMessageEventClass);
 }

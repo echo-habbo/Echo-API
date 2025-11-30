@@ -35,4 +35,6 @@ public abstract class RoomEntity {
     public void setInstanceId(int instanceId) {
         this.instanceId = instanceId;
     }
+
+    public abstract void leaveRoom();
 }

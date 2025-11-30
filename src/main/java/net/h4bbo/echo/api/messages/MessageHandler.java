@@ -113,4 +113,20 @@ public class MessageHandler implements IMessageHandler {
             log.error("Error occurred in MessageHandler", ex);
         }
     }
+
+    @Override
+    public <THandler extends MessageEvent<? extends JavaPlugin>> boolean isRegistered(Class<THandler> handlerClass) {
+        Objects.requireNonNull(handlerClass, "handlerClass");
+
+        for (List<MessageEvent<? extends JavaPlugin>> list : events.values()) {
+            for (MessageEvent<? extends JavaPlugin> handler : list) {
+                if (handler.getClass() == handlerClass) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

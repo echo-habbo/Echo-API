@@ -21,4 +21,6 @@ public abstract class IRoomEntityManager {
     }
 
     public abstract void enter(IEntity entity);
+
+    public abstract void leave(IEntity entity);
 }

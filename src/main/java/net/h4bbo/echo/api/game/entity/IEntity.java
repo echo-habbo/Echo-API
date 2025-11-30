@@ -13,6 +13,11 @@ public interface IEntity extends AttributeMap, IConnectionSend {
      *
      * @return the type
      */
-    public abstract EntityType getType();
+    EntityType getType();
     RoomEntity getRoomEntity();
+
+    default boolean isInRoom() { return this.getRoomEntity() != null
+            && this.getRoomEntity().getRoom() != null
+            && this.getRoomEntity().getInstanceId() >= 0;
+    }
 }
