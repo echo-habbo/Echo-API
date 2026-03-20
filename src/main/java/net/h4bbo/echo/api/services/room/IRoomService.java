@@ -1,19 +1,21 @@
 package net.h4bbo.echo.api.services.room;
 
 import net.h4bbo.echo.storage.models.room.RoomData;
+import net.h4bbo.echo.storage.views.room.RoomDetailsView;
 import org.oldskooler.entity4j.Query;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface IRoomService {
-    public RoomData getRoom(int roomId);
+    public RoomDetailsView getRoom(int roomId);
 
-    List<RoomData> getRoomsByCategory(int categoryId);
+    List<RoomDetailsView> getRoomsByCategory(int categoryId);
 
-    List<RoomData> getRoomsByUserId(int userId);
+    List<RoomDetailsView> getRoomsByUserId(int userId);
 
     void saveRoomSlots(int roomId, int slots);
 
-    List<RoomData> getRooms(Function<Query.Filters<RoomData>, Query.Filters<RoomData>> predicate);
+    List<RoomDetailsView> getRooms(Consumer<Query.Filters<RoomDetailsView>> predicate);
 }

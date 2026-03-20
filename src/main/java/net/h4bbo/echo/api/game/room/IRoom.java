@@ -11,14 +11,15 @@ import net.h4bbo.echo.api.network.connection.IConnectionSend;
 import net.h4bbo.echo.api.network.connection.IConnectionSession;
 import net.h4bbo.echo.api.plugin.JavaPlugin;
 import net.h4bbo.echo.storage.models.room.RoomData;
+import net.h4bbo.echo.storage.views.room.RoomDetailsView;
 
 import java.util.concurrent.CompletableFuture;
 
 public abstract class IRoom implements AttributeMap {
     private final AttributeMap attributeMap = new DefaultAttributeMap();
 
-    public IRoom(RoomData roomData) {
-        this.attributeMap.attr(RoomData.DATA_KEY).setIfAbsent(roomData);
+    public IRoom(RoomDetailsView roomData) {
+        this.attributeMap.attr(RoomDetailsView.DATA_KEY).setIfAbsent(roomData);
     }
 
     public abstract IRoomEntityManager getEntityManager();
